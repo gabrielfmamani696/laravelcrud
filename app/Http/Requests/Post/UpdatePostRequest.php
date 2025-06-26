@@ -11,7 +11,7 @@ class UpdatePostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +21,11 @@ class UpdatePostRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        // (new CreatePostRequest())->rules(): 
+        // estariamos sacando las reglas del create, o sea su validacion
+        return (new CreatePostRequest())->rules();
+        /* 
+        ahora, en caso de necesitar otras validaciones para el update, pues se deben crear otras y ya
+         */
     }
 }

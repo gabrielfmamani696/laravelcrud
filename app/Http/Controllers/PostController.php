@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Post\CreatePostRequest;
+use App\Http\Requests\Post\UpdatePostRequest;
 use App\Models\Post;
 use App\Services\Post\PostService;
 use Illuminate\Http\Request;
@@ -29,7 +30,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        // le mandamos uns instacia de post sin datos, para que devuelva algo, pero nada en particular
+        return view('posts.form', [ 'post' => new Post() ]);
     }
 
     /**
@@ -52,6 +54,7 @@ class PostController extends Controller
         // generarle un path/nombre
 
         // crear la logica de validacion
+        // antes de mandar a crear el post en su servicio, la request se valida
         $this->service->create($request->validated());
         /* Post::create([
             'title'=>$request->input('title'),
@@ -74,17 +77,23 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    // aqui solo estamos buscando un post y cargando la vista con aquel que encuentre
+    public function edit(int $id)
     {
-        //
+        //econtrat el post
+        $post = $this->service->find($id);
+        // devuelve el crud encontrado al form, este ultimo genera la ruta edit en consecuencia
+        return view('posts.form', compact('post'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdatePostRequest $request, int $id)
     {
         //
+        $this->service->update($id, $request->validated());
+        return redirect()->route('posts.index')->with('message', 'Post Actualizado exitosamente!');
     }
 
     /**
@@ -93,5 +102,7 @@ class PostController extends Controller
     public function destroy(string $id)
     {
         //
+        $this->service->delete($id);
+        return redirect()->route('posts.index')->with('message', 'Post Eliminado exitosamente!');
     }
 }

@@ -25,7 +25,7 @@ class CreatePostRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'status' => 'required|in:draft.published',
+            'status' => 'required|in:draft,published',
         ];
     }
 }
