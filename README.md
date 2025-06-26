@@ -67,3 +67,14 @@ DB_PORT=5432
 DB_DATABASE=postgres
 DB_USERNAME=postgres
 DB_PASSWORD=password
+
+## importacion
+clone los datos en el path de Herd de su escritorio.
+coloquese en la ruta del proyecto y escriba el comando: composer install.
+asegurese que el puerto 8000 o aledaños no esten ocupados por otros procesos o bloqueados por su Firewall.
+asegurese en tener configurada su BD y que el entorno .env este configurado en consecuencia.
+si el anterior paso se cumple, migre la informacion del proyecto para asegurarse que todo esta correcto con el comando: php artisan migrate.
+asegurese que la instalacion de php apunte a los archivos de herd, con el comando: php --ini en PS, le mostrara la ruta d los archivos que esta usando el sistema, 
+si no apunta a las carpetas de Herd debera hacer cambios en las Variables de Entorno.
+Limpia la Caché de Laravel: php artisan optimize:clear # O los individuales: cache:clear, config:clear, route:clear, view:clear
+Abre el navegador con la ruta que te da Herd.
